@@ -1,12 +1,15 @@
 package com.ervin.moviecatalogue.ui.main;
 
 import androidx.fragment.app.Fragment;
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.ervin.moviecatalogue.R;
 import com.ervin.moviecatalogue.testing.SingleFragmentActivity;
+import com.ervin.moviecatalogue.utils.EspressoIdlingResource;
 import com.ervin.moviecatalogue.utils.RecyclerViewItemCountAssertion;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,12 +26,18 @@ public class HomeListMovieFragmentTest extends Fragment {
 
     @Before
     public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
         activityTestRuleMovie.getActivity().setFragment(homeListFilmsMovieFragment);
+    }
+
+    @After
+    public void tearDown(){
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
     }
 
     @Test
     public void loadMovies() {
         onView(withId(R.id.rvListMovie)).check(matches(isDisplayed()));
-        onView(withId(R.id.rvListMovie)).check(new RecyclerViewItemCountAssertion(7));
+        onView(withId(R.id.rvListMovie)).check(new RecyclerViewItemCountAssertion(20));
     }
 }

@@ -20,7 +20,7 @@
             android:layout_height="140dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:src="@color/colorPrimary"
+            android:src="@drawable/ic_broken_image_black"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,17 +42,6 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
-        <TextView
-            android:id="@+id/tv_duration"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/duration"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="@id/tv_genre"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/tv_genre"
-            />
 
         <TextView
             android:id="@+id/tv_rating"
@@ -63,7 +52,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="@id/tv_genre"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/tv_duration"
+            app:layout_constraintTop_toBottomOf="@id/tvGenre"
             />
 
         <TextView
@@ -71,27 +60,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/genre"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toEndOf="@id/tv_duration"
+            app:layout_constraintStart_toEndOf="@id/tv_rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_genre"/>
-
-
-        <TextView
-            android:id="@+id/tvDuration"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/duration"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toEndOf="@id/tv_duration"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_duration"/>
 
         <TextView
             android:id="@+id/tvRating"
@@ -102,7 +75,7 @@
             android:ellipsize="end"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toEndOf="@id/tv_duration"
+            app:layout_constraintStart_toEndOf="@id/tv_rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_rating"/>
 
@@ -115,9 +88,11 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@color/black"
+            android:layout_marginTop="8dp"
             android:textSize="16sp"
             android:text="@string/sinopsis"
             />
+
         <TextView
             android:id="@+id/tvSinopsis"
             app:layout_constraintTop_toBottomOf="@id/tv_sinopsis"
@@ -128,6 +103,7 @@
             />
 
         <TextView
+            android:id="@+id/tv_Casting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +112,19 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_marginTop="8dp"
             android:text="@string/casting"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="8dp"
+            android:id="@+id/rvCasters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_Casting"
+            app:layout_constraintStart_toStartOf="@id/tv_Casting"
+            app:layout_constraintEnd_toEndOf="@id/tv_Casting"
+            tools:listitem="@layout/cv_list_caster"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,46 +1,63 @@
 package com.ervin.moviecatalogue.ui.main;
 
-import android.app.Activity;
-
-import androidx.lifecycle.LiveData;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
+import androidx.lifecycle.Observer;
 
-import com.ervin.moviecatalogue.model.FilmModel;
-import com.ervin.moviecatalogue.utils.DataDummy;
+import com.ervin.moviecatalogue.data.source.FilmRepository;
+import com.ervin.moviecatalogue.data.source.local.model.FilmModel;
+import com.ervin.moviecatalogue.utils.FakeDataDummy;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class PageViewModelTest{
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     private PageViewModel pageViewModel;
-    private int sizeMovie,sizeSeries;
+    private FilmRepository mockedFilmRepository = mock(FilmRepository.class);
+
+
     @Before
     public void setUp(){
-        pageViewModel = new PageViewModel();
+        pageViewModel = new PageViewModel(mockedFilmRepository);
         //setindex 0 untuk film movie, 1 untuk film series
-        sizeMovie = 7;
-        sizeSeries = 3;
     }
 
     @Test
-    public void getSizeMovies(){
-        //todo kenapa kalo begini dia hasilnya null ya? mungkin salah ya implementasi live data di modelviewnya?
-//        pageViewModel.setIndex(0);
-//        assertEquals(sizeMovie, pageViewModel.getDataFilms().getValue());
-        pageViewModel.setPageIndex(0);
-        assertEquals(sizeMovie, pageViewModel.getFilms().size());
+    public void getFilmMovies(){
+        MutableLiveData<List<FilmModel>> dummyMovieList = new MutableLiveData<>();
+        dummyMovieList.setValue(FakeDataDummy.generateDummyFilmMovieList());
+        when(mockedFilmRepository.getAllMovies()).thenReturn(dummyMovieList);
+
+        Observer<List<FilmModel>> observer = Mockito.mock(Observer.class);
+
+        pageViewModel.getFilmsMovie().observeForever(observer);
+
+        verify(mockedFilmRepository).getAllMovies();
     }
 
     @Test
-    public void getSizeSeries(){
-        pageViewModel.setPageIndex(1);
-        assertEquals(sizeSeries, pageViewModel.getFilms().size());
+    public void getFilmSeries(){
+        MutableLiveData<List<FilmModel>> dummyMovieList = new MutableLiveData<>();
+        dummyMovieList.setValue(FakeDataDummy.generateDummyFilmSeriesList());
+        when(mockedFilmRepository.getAllSeries()).thenReturn(dummyMovieList);
+
+        Observer<List<FilmModel>> observer = Mockito.mock(Observer.class);
+
+        pageViewModel.getFilmsSeries().observeForever(observer);
+
+        verify(mockedFilmRepository).getAllSeries();
     }
 
 

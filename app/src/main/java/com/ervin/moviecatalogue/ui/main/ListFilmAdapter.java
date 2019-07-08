@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.ervin.moviecatalogue.R;
-import com.ervin.moviecatalogue.model.FilmModel;
+import com.ervin.moviecatalogue.data.source.local.model.FilmModel;
 import com.ervin.moviecatalogue.ui.detail.DetailFilmActivity;
 import com.ervin.moviecatalogue.utils.GlideApp;
 
@@ -25,8 +25,13 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.ListFi
 
     private Activity activity;
     private List<FilmModel> films = new ArrayList<>();
+    private int filmType;
+    //filmType
+    // 1 = movies
+    // 2 = series
 
-    public ListFilmAdapter(Activity activity) {
+    public ListFilmAdapter(Activity activity, int filmType) {
+        this.filmType = filmType;
         this.activity = activity;
     }
 
@@ -36,7 +41,7 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.ListFi
 
     public void setFilms(List<FilmModel> films) {
         if(this.films.size()!=0){
-            films.clear();
+            this.films.clear();
         }
         this.films = films;
         notifyDataSetChanged();
@@ -70,6 +75,7 @@ public class ListFilmAdapter extends RecyclerView.Adapter<ListFilmAdapter.ListFi
 
         holder.cardViewFilm.setOnClickListener(l->{
             Intent intent = new Intent(activity, DetailFilmActivity.class);
+            intent.putExtra(DetailFilmActivity.FILM_TYPE, filmType);
             intent.putExtra(DetailFilmActivity.ID_DETAIL_FILM, filmModel.getFilmID());
             activity.startActivity(intent);
         });

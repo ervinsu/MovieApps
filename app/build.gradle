@@ -14,10 +14,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "ApiKey", MovieApps_ApiKey
+            buildConfigField 'String', "BaseUrlImage", MovieApps_BaseUrlImage
+            buildConfigField 'String', "BaseUrl", MovieApps_BaseUrl
+            resValue 'string', "api_key", MovieApps_ApiKey
         }
         debug {
             applicationIdSuffix ".debug"
             debuggable true
+            buildConfigField 'String', "ApiKey", MovieApps_ApiKey
+            buildConfigField 'String', "BaseUrlImage", MovieApps_BaseUrlImage
+            buildConfigField 'String', "BaseUrl", MovieApps_BaseUrl
+            resValue 'string', "api_key", MovieApps_ApiKey
         }
     }
 
@@ -83,4 +91,7 @@ dependencies {
 
     // Dependencies for Idle Resource
     implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
+
+    // Dependencies for request webservice
+    implementation "com.loopj.android:android-async-http:$loopjVersion"
 }
